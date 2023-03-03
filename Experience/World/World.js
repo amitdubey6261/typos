@@ -5,6 +5,7 @@ import CannonDebugger from "cannon-es-debugger";
 import Experience from '../Experience';
 import Car from './Car';
 import Enviroment from './Enviroment';
+import Controlls from './Controlls';
 
 export default class World{
     constructor(){
@@ -16,6 +17,7 @@ export default class World{
         this.enviroment = new Enviroment();
         this.createCannonWorld();
         this.car = new Car();
+        this.Controlls = new Controlls();
     }
 
     createCannonWorld(){
