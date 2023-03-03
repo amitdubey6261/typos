@@ -16,6 +16,7 @@ export default class Controlls{
         this.bottomPanel.style.height = '5vh';
         this.bottomPanel.style.position = 'relative';
         this.bottomPanel.style.zIndex = 2 ; 
+        this.bottomPanel.style.backgroundColor = 'red';
         this.bottomPanel.style.top = '50vh'
         document.body.appendChild(this.bottomPanel);
     }
