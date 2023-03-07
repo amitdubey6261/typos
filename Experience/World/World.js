@@ -3,9 +3,8 @@ import * as CANNON from 'cannon-es';
 import CannonDebugger from "cannon-es-debugger";
 
 import Experience from '../Experience';
-import Car from './Car';
 import Enviroment from './Enviroment';
-import Controlls from './Controlls';
+import Words from './Words';
 
 export default class World{
     constructor(){
@@ -15,23 +14,152 @@ export default class World{
         this.scene = this.experience.scene;
         this.canvas= this.experience.canvas;
         this.enviroment = new Enviroment();
+        this.stringMatcher = "" ; 
+        this.idx = 0 ;
         this.createCannonWorld();
-        this.car = new Car();
-        this.Controlls = new Controlls();
+        this.setJump();
     }
-
+    
+    
     createCannonWorld(){
-        this.cworld = new CANNON.World();
-        this.cworld.gravity.set( 0 , -10 , 0 );
-        this.CannonDebugger = new CannonDebugger( this.scene , this.cworld , {
+        this.CannonWorld = new CANNON.World({
+            gravity : new CANNON.Vec3 ( 0 , -10 , 0 ) ,
+        })
+        
+        this.CannonDebugger = new CannonDebugger( this.scene , this.CannonWorld , {
             color : 0xff0000,
             scale : 1.0
-        });
+        })
+        this.createGround();
+        this.createCharacter();
+        this.createBuildings();
+        this.createObstacles();
+        this.setEventListner();
+    }
+
+    
+    createCharacter(){
+        this.characterBody = new CANNON.Body({
+            shape : new CANNON.Box(new CANNON.Vec3( 0.1,0.2,0.1)) , 
+            position: new CANNON.Vec3( 0 , 1 , 0 ),
+            mass : 100
+        })
+        
+        this.characterBody.id = 3 ; 
+        
+        this.CannonWorld.addBody(this.characterBody)
+    }
+
+    setEventListner(){
+        this.characterBody.addEventListener('collide' , (e)=>{
+            if(e.body.id == 1){
+                console.log("collided with box!");
+            }
+        })
+    }
+    
+    createGround(){
+        this.groundBody = new CANNON.Body({
+            shape : new CANNON.Plane(10 , 10) ,
+            position : (0 , 0 , 0 ) , 
+            mass : 0 ,
+        })
+        this.groundBody.quaternion.setFromEuler( -Math.PI/2 , 0 , 0 );
+        this.groundBody.id = 2 ; 
+        this.CannonWorld.addBody(this.groundBody);
+    }
+
+
+    createObstacles(){
+        console.log(Words[this.idx])
+        this.Obstaclebody = new CANNON.Body({
+            shape : new CANNON.Box(new CANNON.Vec3( 0.1,0.1,0.1)) , 
+            position: new CANNON.Vec3( 0 , 1 , -5 ),
+            mass : 1 ,
+        })
+
+        this.Obstaclebody.id = 1 ; 
+
+        this.CannonWorld.addBody(this.Obstaclebody);
+    }
+
+    createBuildings(){
+        this.BuildingArrayLeft = [];
+        this.BuildingArrayRight = [];
+        for(let i = 0 ; i<10 ; i++ ){
+            this.BuildingArrayLeft.push(new CANNON.Body({
+                shape : new CANNON.Box(new CANNON.Vec3( 0.3,0.3,0.3)) , 
+                position: new CANNON.Vec3( -2 , 0.2 , -5+i ),
+                mass : 1 ,
+            }));
+            this.BuildingArrayRight.push(new CANNON.Body({
+                shape : new CANNON.Box(new CANNON.Vec3( 0.3,0.3,0.3)) , 
+                position: new CANNON.Vec3( 2 , 0.2 , -5+i ),
+                mass : 1 ,
+            }));
+        } 
+
+        this.BuildingArrayLeft.map((e)=>{
+            this.CannonWorld.addBody(e)
+        })
+
+        this.BuildingArrayRight.map((e)=>{
+            this.CannonWorld.addBody(e)
+        })
+    }
+
+    setJump(){
+        window.addEventListener('keydown' , (e)=>{
+            if(e.defaultPrevented){
+                return ; 
+            }
+            this.stringMatcher += e.key ; 
+            e.preventDefault();
+        })
+    }
+
+    jump(){
+        this.characterBody.velocity = new CANNON.Vec3( 0 , 5 , 0 );
+        this.stringMatcher = "";
     }
 
     update(){
-        this.cworld.step(this.timeStep);
+        this.CannonWorld.step(this.timeStep) 
         this.CannonDebugger.update();
-        this.car.update();
+        if(this.Obstaclebody.position.z > 5){
+            this.CannonWorld.removeBody(this.Obstaclebody);
+            this.idx += 1 ; 
+            if(this.idx === Words.length ){
+                this.idx = 0 ; 
+            }
+            this.createObstacles();
+        }
+        this.listenString();
+        this.Obstaclebody.position.z += 0.02 ;
+
+        //UPDATE BUILDING
+        if(this.BuildingArrayLeft){
+            this.BuildingArrayLeft.map((e)=>{
+                e.position.z += 0.02 ;
+                if(e.position.z > 5){
+                    e.position.z = -5; 
+                }
+            })
+        }
+
+        if(this.BuildingArrayRight){
+            this.BuildingArrayRight.map((e)=>{
+                e.position.z += 0.02 ;
+                if(e.position.z > 5){
+                    e.position.z = -5; 
+                }
+            })
+        }
+    }
+
+    listenString(){
+        if(this.stringMatcher.length == Words[this.idx].length && (this.stringMatcher === Words[this.idx] )){
+            this.jump();
+        }
     }
 }

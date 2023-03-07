@@ -11,13 +11,11 @@ export default class Time extends EventEmitter{
     }
 
     update(){
-        setTimeout(()=>{
-            const currentTime = Date.now();
-            this.delta = currentTime - this.current ;
-            this.current = currentTime ;
-            this.elapsed = this.current - this.start;
-            this.emit("update");
-            window.requestAnimationFrame(()=>{this.update()});
-        } , 1000/120 )
+        const currentTime = Date.now();
+        this.delta = currentTime - this.current ;
+        this.current = currentTime ;
+        this.elapsed = this.current - this.start;
+        this.emit("update");
+        window.requestAnimationFrame(()=>{this.update()});
     }
 }

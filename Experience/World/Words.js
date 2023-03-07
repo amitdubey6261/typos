@@ -1,18 +1,4 @@
 export default[
     "amit",
-    "ankit",
-    "kallu",
-    "priya",
-    "riya",
-    "gopal",
-    "mohan",
-    "alok",
-    "richa",
-    "rani",
-    "bade",
-    "chote",
-    "bhura",
-    "nata",
-    "abhishek",
-    "krishna",
+    "ankit"
 ]

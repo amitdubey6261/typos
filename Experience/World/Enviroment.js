@@ -17,7 +17,7 @@ export default class Enviroment{
         this.panel.style.height = '10cm' ;
         this.panel.style.position = 'relative' ; 
         this.panel.style.zIndex = 2 ;
-        // this.panel.style.visibility = 'hidden';
+        this.panel.style.visibility = 'hidden';
         document.body.appendChild(this.panel);
     }
 
