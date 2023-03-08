@@ -189,7 +189,7 @@ export default class World {
     }
 
     setDialer() {
-        this.MessgBox.innerHTML = `<h1>${"GAME OVER"}</h1>`;
+        this.MessgBox.innerHTML = `<h1>${"---------GAME OVER---------"}</h1>`;
         this.dialer.style.backgroundColor = 'red';
         this.dialer.style.opacity = 0.4 ; 
         this.playButton = document.createElement('center');
