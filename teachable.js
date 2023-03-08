@@ -16,7 +16,6 @@ var beep = new Howl({
 });
 
 function setup() {
-  createCanvas(320, 260);
   video = createCapture(VIDEO);
   video.size(320, 240);
   video.hide();
@@ -37,8 +36,6 @@ function gotResult(error, results) {
     console.error(error);
     return;
   }
-
-
 
   if(results[0].label == 'Class 2') {
     count+=1 ; 

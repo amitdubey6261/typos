@@ -1,5 +1,5 @@
 import Experience from './Experience/Experience.js';
 
-setTimeout(() => {
+// setTimeout(() => {
     const experience = new Experience(document.querySelector(".experience-canvas"));
-}, 5000)
+// }, )
