@@ -29,6 +29,7 @@ export default class Experience{
 
         this.resources.on("ready" , ()=>{
             this.world = new World();
+            this.loadScript();
         })
 
         this.sizes.on("resize" , ()=>{
@@ -38,7 +39,10 @@ export default class Experience{
         this.time.on("update" , ()=>{
             this.update();
         });
+    }
 
+    loadScript(){
+        console.log("pani")
     }
 
     
