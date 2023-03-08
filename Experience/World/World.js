@@ -5,6 +5,7 @@ import CannonDebugger from "cannon-es-debugger";
 import Experience from '../Experience';
 import Enviroment from './Enviroment';
 import Words from './Words';
+import Head from './Head';
 
 export default class World {
     constructor() {
@@ -14,6 +15,7 @@ export default class World {
         this.scene = this.experience.scene;
         this.canvas = this.experience.canvas;
         this.enviroment = new Enviroment();
+        // this.head = new Head();
         this.stringMatcher = "";
         this.idx = 0;
         this.collisionCount = 0;
