@@ -5,7 +5,10 @@ import CannonDebugger from "cannon-es-debugger";
 import Experience from '../Experience';
 import Enviroment from './Enviroment';
 import Words from './Words';
-import Head from './Head';
+import Sketch from './Sketch';
+
+import p5 from 'p5';
+
 
 export default class World {
     constructor() {
@@ -15,7 +18,7 @@ export default class World {
         this.scene = this.experience.scene;
         this.canvas = this.experience.canvas;
         this.enviroment = new Enviroment();
-        // this.head = new Head();
+        this.p5 = new p5(Sketch());
         this.stringMatcher = "";
         this.idx = 0;
         this.collisionCount = 0;
@@ -174,8 +177,6 @@ export default class World {
             })
         }
 
-        //
-
         if (this.collisionCount > 0) {
             this.collisionCount = 0;
             this.setDialer();
@@ -198,6 +199,6 @@ export default class World {
             window.location.reload();
         })
         this.dialer.appendChild(this.playButton);
-        process.exit();
+        // process.exit();
     }
 }

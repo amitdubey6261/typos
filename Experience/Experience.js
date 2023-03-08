@@ -12,12 +12,12 @@ import Controllers from './Controllers.js';
 
 import World from './World/World.js';
 
-export default class Experience{
+export default class Experience {
     static instance
-    constructor( canvas ){
-        if(Experience.instance){ return Experience.instance }
-        Experience.instance = this ;
-        this.canvas = canvas ; 
+    constructor(canvas) {
+        if (Experience.instance) { return Experience.instance }
+        Experience.instance = this;
+        this.canvas = canvas;
         this.scene = new THREE.Scene();
         this.sizes = new Sizes();
         this.time = new Time();
@@ -27,35 +27,34 @@ export default class Experience{
         this.controllers = new Controllers();
         this.resources = new Resources(Assets);
 
-        this.resources.on("ready" , ()=>{
+        this.resources.on("ready", () => {
             this.world = new World();
             this.loadScript();
         })
 
-        this.sizes.on("resize" , ()=>{
+        this.sizes.on("resize", () => {
             this.resize();
         });
 
-        this.time.on("update" , ()=>{
+        this.time.on("update", () => {
             this.update();
         });
     }
 
-    loadScript(){
+    loadScript() {
         console.log("pani")
     }
 
-    
-    resize(){
+
+    resize() {
         this.camera.resize();
         this.renderer.resize();
     }
 
-    update(){
+    update() {
         this.camera.update();
         this.renderer.update();
         this.controllers.update();
-        if(this.world)
-            this.world.update();
+        if (this.world) this.world.update();
     }
 }
