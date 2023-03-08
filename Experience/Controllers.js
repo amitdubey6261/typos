@@ -19,7 +19,7 @@ export default class Controllers{
     createOrbitControllers(){
         this.orbitControl = new OrbitControls( this.camera.perspectiveCam , this.canvas );
         this.orbitControl.enableDamping = true ; 
-        this.orbitControl.enableZoom = true ; 
+        // this.orbitControl.enableZoom = true ; 
     }
 
     update(){

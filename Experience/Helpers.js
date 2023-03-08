@@ -16,7 +16,7 @@ export default class Helpers{
 
     setAxesHelper(){
         const axesHelper = new THREE.AxesHelper( 100 );
-        this.scene.add( axesHelper );
+        // this.scene.add( axesHelper );
     }
 
     setGridHelper(){
@@ -24,6 +24,6 @@ export default class Helpers{
         const divisions = 10;
 
         const gridHelper = new THREE.GridHelper( size, divisions );
-        this.scene.add( gridHelper );
+        // this.scene.add( gridHelper );
     }
 }
