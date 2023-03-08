@@ -49,8 +49,7 @@ export default class World {
         this.dialer.style.position = 'relative';
         this.dialer.style.zIndex = 2;
         this.dialer.style.width = `${window.screen.availWidth}px`;
-        this.dialer.style.height = `${window.screen.availHeight}px`;
-        // this.dialer.style.backgroundColor = 'red';
+        this.dialer.style.height = `${window.screen.availHeight/3}px`;
         document.body.appendChild(this.dialer);
         this.MessgBox = document.createElement('center');
         this.MessgBox.style.color = 'white';
@@ -199,6 +198,6 @@ export default class World {
             window.location.reload();
         })
         this.dialer.appendChild(this.playButton);
-        // process.exit();
+        process.exit();
     }
 }
